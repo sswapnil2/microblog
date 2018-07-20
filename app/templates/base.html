@@ -1,34 +1,38 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% if title %}
-      <title>{{title}} - Microblog</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> {% if title %}
+    <title>{{title}} - Microblog</title>
     {% else %}
-        <title>Welcome to Microblog</title>
+    <title>Welcome to Microblog</title>
     {% endif %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 </head>
+
 <body>
-    <div>Microblog : <a href={{url_for('index')}}>Home</a> <a href= {{url_for('login')}}>Login</a></div>
-    <hr>
-    {% with messages=get_flashed_messages() %}
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{message}}</li>
-            
-            {% endfor %}
-        </ul>
+    <div>Microblog :
+        <a href="{{url_for('index')}}">Home</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{url_for('login')}}">Login</a>
+        {% else %}
+        <a href="{{url_for('logout')}}">Logout</a>
+        {% endif %}
+    </div>
+    <hr> {% with messages=get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
 
-    {% endif %}
+        {% endfor %}
+    </ul>
 
-    {% endwith %}
-
-
-
-    {% block content %}
-    {% endblock  %}
+    {% endif %} {% endwith %} {% block content %} {% endblock %}
 </body>
+
 </html>
